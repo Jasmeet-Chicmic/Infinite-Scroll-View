@@ -23,7 +23,8 @@ export class infiniteScrol extends Component {
         {count++;
             // arr.push(count);
             let item = instantiate(this.item);
-            item.getComponent(Label).string = String(count);
+            item.getChildByName("Label").getComponent(Label).string = String(count);
+            
             a.addChild(item);
             // console.log(arr);
             
