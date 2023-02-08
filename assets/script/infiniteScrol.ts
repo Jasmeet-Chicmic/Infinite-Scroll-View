@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab, ScrollView,ScrollBar, Label } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab, ScrollView,ScrollBar, Label, UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
 let count = -10;
@@ -14,6 +14,7 @@ export class infiniteScrol extends Component {
         {
             this.node.on(ScrollView.EventType.SCROLL_TO_BOTTOM,this.bottom);
             this.node.on(ScrollView.EventType.SCROLL_TO_TOP,this.top);
+
         }
     start() {
         let a = this.node.getComponent(ScrollView).content;
@@ -38,6 +39,12 @@ export class infiniteScrol extends Component {
     {
         let a = this.node.getComponent(ScrollView).content.children[0];
         a.setSiblingIndex(19);
+        let scrolloffset = this.node.getComponent(ScrollView).getScrollOffset();
+        let item = instantiate(this.item);
+        let itemSize = item.getComponent(UITransform).contentSize.height;
+        scrolloffset.y = scrolloffset.y - itemSize;
+        this.node.getComponent(ScrollView).scrollToOffset(scrolloffset);
+        console.log(scrolloffset);  
         // console.log(this);
         
         // let a = this.node.getComponent(ScrollView).content;
@@ -60,6 +67,13 @@ export class infiniteScrol extends Component {
     {
         let a = this.node.getComponent(ScrollView).content.children[19];
         a.setSiblingIndex(0);
+        let scrolloffset = this.node.getComponent(ScrollView).getScrollOffset();
+        let item = instantiate(this.item);
+        let itemSize = item.getComponent(UITransform).contentSize.height;
+        scrolloffset.y = scrolloffset.y + itemSize;
+        this.node.getComponent(ScrollView).scrollToOffset(scrolloffset);
+        console.log(scrolloffset);  
+        
         // // this.Content.insertBefore(item, this.Content.children[0]);
         // // console.log(this);
         
@@ -83,6 +97,11 @@ export class infiniteScrol extends Component {
     }
 
     update(deltaTime: number) {
+        let scrolloffset = this.node.getComponent(ScrollView).getScrollOffset();
+        // scrolloffset.y = scrolloffset.y + 186;
+        // this.node.getComponent(ScrollView).scrollToOffset(scrolloffset);
+        console.log(scrolloffset);  
+        
         
     }
 }
